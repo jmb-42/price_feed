@@ -1,0 +1,46 @@
+# Date: 6 July 2020
+# Author: Justin Beaurone
+## NOTES:
+# refer to https://swagger.io/specification/v2/ for
+# full documentation on swagger/OpenAPI specs
+##
+# version of OpenAPI specification (required)
+swagger: '2.0'
+# metadata about the API (required)
+info:
+  title: Blockchain Asset Price Feed
+  version: '1.0'
+  description: Offers API users blockchain asset prices.
+# globally define the data types the API handles (must be standard MIME Types)
+consumes:
+  - application/json
+produces:
+  - application/json
+# defines the connection type (http, https, ws, wss)
+schemes:
+  - http
+# define API endpoints (required). brackets denote variables/parameters
+paths:
+  /price:
+    # define the http method
+    get:
+      # tags are used for grouping together API calls
+      tags: [Trading Pairs]
+      # operationId is the Python function that this path calls,
+      # as defined in app.py
+      operationId: app.fetch_price
+      summary: Retrieves the latest price of an asset.
+      # define the input parameters of the API call
+      parameters:
+        - name: asset
+          # query denotes that the param is in the query. for example:
+          # https://api.assetprices.com/price?asset=ETHBTC
+          in: query
+          type: string
+          required: True
+      # good practice is to define known cases
+      responses:
+        200:
+          description: Returns the price of a trading pair.
+        404:
+          description: Data for the given asset is not available.
