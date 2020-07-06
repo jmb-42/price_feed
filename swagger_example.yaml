@@ -22,7 +22,7 @@ schemes:
 # define API endpoints (required). brackets denote variables/parameters
 paths:
   /price:
-    # define the http method
+    # http method
     get:
       # tags are used for grouping together API calls
       tags: [Trading Pairs]
@@ -44,3 +44,19 @@ paths:
           description: Returns the price of a trading pair.
         404:
           description: Data for the given asset is not available.
+  /pairs:
+    get:
+      tags: [Trading Pairs]
+      operationId: app.fetch_pairs
+      summary: Lists the trading pairs with available price data.
+      responses:
+        200:
+          description: OK
+          # the return type of the request will be an array of strings
+          schema:
+            type: object
+            properties:
+              tradingPairs:
+                type: array
+                items:
+                  type: string
